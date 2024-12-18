@@ -6,7 +6,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0 as S
-import Opal.FancyContextMenu 1.0 as M
+import '../modules/FancyContextMenu' as M
 
 S.Page {
     id: root
@@ -25,19 +25,59 @@ S.Page {
             spacing: S.Theme.paddingMedium
 
             S.PageHeader {
-                title: qsTr("Example Page")
+                title: qsTr("Fancy ContextMenus")
             }
 
             S.SectionHeader {
-                text: qsTr("Basic usage")
+                text: qsTr("Example")
             }
 
-            S.Label {
-                x: S.Theme.horizontalPageMargin
-                width: root.width - 2*x
-                wrapMode: Text.Wrap
-                text: qsTr("This is how to use the new component.")
-                color: S.Theme.highlightColor
+            S.ListItem {
+                S.Label {
+                    x: S.Theme.horizontalPageMargin
+                    y: S.Theme.paddingLarge
+                    width: root.width - 2*x
+                    wrapMode: Text.Wrap
+                    text: qsTr("Press and hold to open context menu")
+                }
+
+                menu: Component {
+                    M.FancyContextMenu {
+                        listItem: parent
+                        M.FancyMenuRow {
+                            M.FancyMenuItem {
+                                text: qsTr("Text action")
+                            }
+                            M.FancyMenuIcon {
+                                icon.source: "image://theme/icon-m-clipboard"
+                            }
+                            M.FancyMenuIcon {
+                                icon.source: "image://theme/icon-m-favorite"
+                            }
+                        }
+                        M.FancyMenuRow {
+                            M.FancyMenuIcon {
+                                icon.source: "image://theme/icon-m-delete"
+                            }
+                            M.FancyMenuItem {
+                                text: qsTr("Long Long Long Text Action")
+                            }
+                            M.FancyIconMenuItem {
+                                icon.source: "image://theme/icon-m-reply"
+                                text: qsTr("Reply")
+                            }
+                        }
+                        S.MenuItem {
+                            text: qsTr("Basic item")
+                        }
+
+                        M.FancyAloneIconMenuItem {
+                            icon.source: "image://theme/icon-m-about"
+                            text: qsTr("About this")
+                        }
+
+                    }
+                }
             }
 
             S.SectionHeader {
