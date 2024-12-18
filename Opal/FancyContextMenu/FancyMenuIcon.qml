@@ -19,21 +19,17 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-Image {
+Item {
     property bool down
-    property bool highlighted
-    property color color: Theme.primaryColor
-    property color highlightColor : Theme.highlightColor
-    property string icon
-
     signal clicked
+    property alias icon: icon
 
-    source: icon + "?" + (highlighted ? highlightColor : color)
-    opacity: enabled ? 1.0 : Theme.opacityLow
     width: parent.itemWidth
-    fillMode: Image.Pad
+    height: Theme.itemSizeSmall//icon.height
+    Icon {
+        id: icon
+        anchors.centerIn: parent
+    }
 
     onVisibleChanged: parent.calculateItemWidth()
-
-    height: Theme.itemSizeSmall
 }
