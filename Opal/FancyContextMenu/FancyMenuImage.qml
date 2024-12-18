@@ -22,24 +22,18 @@ import Sailfish.Silica 1.0
 Image {
     property bool down
     property bool highlighted
-    property color color: constant.colorLight
+    property color color: Theme.primaryColor
     property color highlightColor : Theme.highlightColor
     property string icon
 
     signal clicked
 
-    source: icon + "?" + (enabled
-                              ? highlighted
-                                  ? highlightColor
-                                  : color
-                              : constant.colorDisabled
-                          )
+    source: icon + "?" + (highlighted ? highlightColor : color)
+    opacity: enabled ? 1.0 : Theme.opacityLow
     width: parent.itemWidth
     fillMode: Image.Pad
 
-    onVisibleChanged: {
-        parent.calculateItemWidth();
-    }
+    onVisibleChanged: parent.calculateItemWidth()
 
     height: Theme.itemSizeSmall
 }

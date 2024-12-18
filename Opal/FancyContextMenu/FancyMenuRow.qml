@@ -113,8 +113,5 @@ Row {
         value: contextMenu.width
     }
 
-    onWidthChanged: {
-        calculateItemWidth();
-    }
-
+    onWidthChanged: calculateItemWidth()
 }
