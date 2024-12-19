@@ -15,8 +15,8 @@ MenuItem {
                                                               : OpacityRamp.LeftToRight
             source: menuItem
             slope: Math.max(
-                       1 + 6 * root.width / Screen.width,
-                       root.width / Math.max(1, 2 * (root.implicitWidth - width)))
+                       1 + 6 * menuItem.width / Screen.width,
+                       menuItem.width / Math.max(1, 2 * (menuItem.implicitWidth - width)))
             offset: 1 - 1 / slope
 
             property bool down: menuItem.down
