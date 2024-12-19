@@ -6,7 +6,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0 as S
-import '../modules/FancyContextMenu' as M
+import Opal.FancyContextMenu 1.0 as M
 
 S.Page {
     id: root
@@ -33,20 +33,24 @@ S.Page {
             }
 
             S.ListItem {
+                contentHeight: label1.height + 2*label2.y
                 S.Label {
+                    id: label1
                     x: S.Theme.horizontalPageMargin
                     y: S.Theme.paddingLarge
                     width: root.width - 2*x
                     wrapMode: Text.Wrap
-                    text: qsTr("Press and hold to open context menu")
+                    text: qsTr("Press to open context menu")
                 }
 
+                onClicked: openMenu()
                 menu: Component {
                     M.FancyContextMenu {
                         listItem: parent
                         M.FancyMenuRow {
-                            M.FancyMenuItem {
-                                text: qsTr("Text action")
+                            M.FancyMenuIcon {
+                                icon.source: "image://theme/icon-m-delete"
+                                onClicked: undefined // Here goes your code
                             }
                             M.FancyMenuIcon {
                                 icon.source: "image://theme/icon-m-clipboard"
@@ -56,24 +60,22 @@ S.Page {
                             }
                         }
                         M.FancyMenuRow {
-                            M.FancyMenuIcon {
-                                icon.source: "image://theme/icon-m-delete"
-                            }
-                            M.FancyMenuItem {
-                                text: qsTr("Long Long Long Text Action")
+                            M.FancyIconMenuItem {
+                                icon.source: "image://theme/icon-m-message-reply"
+                                text: qsTr("Reply")
                             }
                             M.FancyIconMenuItem {
-                                icon.source: "image://theme/icon-m-reply"
-                                text: qsTr("Reply")
+                                icon.source: "image://theme/icon-m-message-forward"
+                                text: qsTr("Forward")
                             }
                         }
                         S.MenuItem {
-                            text: qsTr("Basic item")
+                            text: qsTr("About this")
                         }
 
-                        M.FancyAloneIconMenuItem {
-                            icon.source: "image://theme/icon-m-about"
-                            text: qsTr("About this")
+                        M.FancyAloneMenuItem {
+                            icon.source: "image://theme/icon-m-favorite"
+                            text: qsTr("Add to favorites")
                         }
 
                     }
@@ -84,12 +86,59 @@ S.Page {
                 text: qsTr("Advanced usage")
             }
 
-            S.Label {
-                x: S.Theme.horizontalPageMargin
-                width: root.width - 2*x
-                wrapMode: Text.Wrap
-                text: qsTr("This is a more complex scenario.")
-                color: S.Theme.highlightColor
+            S.ListItem {
+                contentHeight: label2.height + label2.y*2
+                S.Label {
+                    id: label2
+                    x: S.Theme.horizontalPageMargin
+                    y: S.Theme.paddingLarge
+                    width: root.width - 2*x
+                    wrapMode: Text.Wrap
+                    text: qsTr("Press to open context menu covering all advanced features")
+                }
+
+                onClicked: openMenu()
+                menu: Component {
+                    M.FancyContextMenu {
+                        listItem: parent
+
+                        M.FancyAloneMenuItem {
+                            direction: Qt.RightToLeft
+                            icon.source: "image://theme/icon-m-rotate-right"
+                            text: qsTr("Icon on the right side")
+                        }
+
+                        M.FancyMenuRow {
+                            M.FancyMenuIcon {
+                                icon.source: "image://theme/icon-m-question"
+                            }
+                            M.FancyMenuItem {
+                                text: qsTr("Long text is resized")
+                            }
+                            M.FancyMenuItem {
+                                text: qsTr("Truncated super long text which will not fit even when resized goes here")
+                            }
+                        }
+
+                        M.FancyMenuRow {
+                            M.FancyIconMenuItem {
+                                direction: Qt.RightToLeft
+                                icon.source: "image://theme/icon-m-message-reply"
+                                text: qsTr("Icon on the right")
+                            }
+                            M.FancyIconMenuItem {
+                                direction: Qt.RightToLeft
+                                icon.source: "image://theme/icon-m-message-forward"
+                                text: qsTr("Icon on the right")
+                            }
+                        }
+
+                        M.FancyAloneMenuItem {
+                            icon.source: "image://theme/icon-m-about"
+                            // no text
+                        }
+                    }
+                }
             }
         }
     }
