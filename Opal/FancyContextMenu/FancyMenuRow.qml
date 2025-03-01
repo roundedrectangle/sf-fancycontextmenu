@@ -24,7 +24,8 @@ Row {
 
     spacing: 0
 
-    property FancyContextMenu contextMenu: parent.parent
+    property Item contextMenu: parent.parent // FancyContextMenu
+    property bool isPulley: contextMenu && (typeof contextMenu._isPullDownMenu !== 'undefined')
 
     // the x position we need to track
     property real xPos
@@ -43,6 +44,9 @@ Row {
 
     // current highlighted item
     property Item _highlightedItem
+
+    // this is just to suppress errors, not using this probably shuold not break anything
+    property bool _invertColors
 
     function updateHighlightbarFor(item) {
         contextMenu._highlightBar.x = item ? item.x : parent.x
@@ -64,9 +68,9 @@ Row {
     // the contextmenu, so this is for initialising xpos in those cases.
     function updateXPosFromMenu() {
         if (contextMenu.listItem/* && settings.commentsTapToHide*/) { // if listItem is set, events are produced relative listItem
-            xPos = _contentColumn.mapFromItem(contextMenu.listItem, contextMenu.listItem.mouseX, contextMenu.listItem.mouseY).x;
+            xPos = contextMenu._contentColumn.mapFromItem(contextMenu.listItem, contextMenu.listItem.mouseX, contextMenu.listItem.mouseY).x
         } else {
-            xPos = _contentColumn.mapFromItem(contextMenu, contextMenu.mouseX, contextMenu.mouseY).x;
+            xPos = contextMenu._contentColumn.mapFromItem(contextMenu, contextMenu.mouseX, contextMenu.mouseY).x
         }
     }
 
@@ -111,6 +115,13 @@ Row {
         target: menuRow
         property: "width"
         value: contextMenu.width
+    }
+
+    Binding {
+        target: menuRow
+        property: 'down'
+        value: menuRow.highlighted
+        when: isPulley
     }
 
     onWidthChanged: calculateItemWidth()

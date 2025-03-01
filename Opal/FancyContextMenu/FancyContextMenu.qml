@@ -18,6 +18,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import 'private/Util.js' as Util
 
 ContextMenu {
     id: contextMenu
@@ -25,18 +26,7 @@ ContextMenu {
     property ListItem listItem
     property Item _highlightBar
 
-    Component.onCompleted: {
-        // find highlight rectangle
-        for (var i=0; i<contextMenu.data.length; i++) {
-            var childItem = contextMenu.data[i];
-            if (childItem.hasOwnProperty("highlightedItem")) {
-                // got the highlightbar
-                _highlightBar = childItem;
-            }
-        }
-        if (!_highlightBar)
-            console.log("HighlightBar not found!");
-    }
+    Component.onCompleted: _highlightBar = Util.findHighlightRectangle(contextMenu)
 
     // handle positionChanged and released events from the listItem.
     // this is needed when pressAndHold is used to open the menu, as then the listItem is consuming
