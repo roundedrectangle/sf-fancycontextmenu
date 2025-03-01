@@ -9,3 +9,4 @@ FancyIconMenuItem 1.0 FancyIconMenuItem.qml
 FancyMenuIcon 1.0 FancyMenuIcon.qml
 FancyMenuItem 1.0 FancyMenuItem.qml
 FancyMenuRow 1.0 FancyMenuRow.qml
+FancyPullDownMenu 1.0 FancyPullDownMenu.qml
