@@ -1,5 +1,5 @@
-module Opal.FancyContextMenu
-# This file is part of Opal.FancyContextMenu.
+module Opal.FancyMenus
+# This file is part of Opal.FancyMenus.
 # SPDX-FileCopyrightText: 2023-2024 Mirian Margiani
 # SPDX-FileCopyrightText: 2024 roundedrectangle
 # SPDX-License-Identifier: GPL-3.0-or-later

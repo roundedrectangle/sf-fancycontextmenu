@@ -4,11 +4,11 @@ SPDX-FileCopyrightText: 2024 roundedrectangle
 SPDX-License-Identifier: GFDL-1.3-or-later
 -->
 
-# FancyContextMenu
+# FancyMenus
 
-QML module for advanced context menu functionality in Sailfish apps
+QML module for advanced context and pulley menu functionality in Sailfish apps
 
-This module provides an easy way to use rows and icons in ContextMenu.
+This module provides an easy way to use rows and icons in ContextMenu, PullDownMenu and PushUpMenu.
 
 
 ## Usage
@@ -16,7 +16,7 @@ This module provides an easy way to use rows and icons in ContextMenu.
 ```{qml}
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import Opal.FancyContextMenu 1.0
+import Opal.FancyMenus 1.0
 
 MyComponent {
     // ...

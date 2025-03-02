@@ -16,20 +16,20 @@ version: 1.0.0
 
 # plain name as used in the module repository URL, will be prefixed with "opal-"
 # where necessary
-name: fancycontextmenu
+name: fancymenus
 
 # styled name including capitalisation etc., will be prefixed with "Opal."
 # where necessary
-nameStyled: FancyContextMenu
+nameStyled: FancyMenus
 
 # very short description of this module: must be plain text without formatting
 # and should be as short as possible. This text may be used as the description
 # of a Git repository, and is used in documentation.
-briefDescription: QML module for advanced context menu functionality in Sailfish apps
+briefDescription: QML module for advanced context and pulley menu functionality in Sailfish apps
 
 # description of this module: may use rich text and will be translated in
 # Opal Gallery. Line breaks can included with '\n' but should be avoided.
-description: This module provides an easy way to use rows and icons in ContextMenu.
+description: This module provides an easy way to use rows and icons in ContextMenu, PullDownMenu and PushUpMenu.
 
 # attribution string for the whole module, in the same form as a SPDX
 # FileCopyrightText entry.

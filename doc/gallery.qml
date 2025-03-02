@@ -1,12 +1,12 @@
-//@ This file is part of Opal.FancyContextMenu for use in harbour-opal-gallery.
-//@ https://github.com/Pretty-SFOS/opal-fancycontextmenu
+//@ This file is part of Opal.FancyMenus for use in harbour-opal-gallery.
+//@ https://github.com/Pretty-SFOS/opal-fancymenus
 //@ SPDX-License-Identifier: GPL-3.0-or-later
 //@ SPDX-FileCopyrightText: 2023-2024 Mirian Margiani
 //@ SPDX-FileCopyrightText: 2024 roundedrectangle
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0 as S
-import Opal.FancyContextMenu 1.0 as M
+import Opal.FancyMenus 1.0 as M
 
 S.Page {
     id: root
