@@ -33,11 +33,13 @@ Row {
     property real itemWidth
 
     signal clicked
+    signal earlyClick
     signal delayedClick
 
     // these get fed from ContextMenu
     property bool down
     property bool highlighted
+    property bool _invertColors
 
     // magic needed so jolla's contextmenu recognizes the Row as a menuitem
     property int __silica_menuitem
@@ -45,16 +47,13 @@ Row {
     // current highlighted item
     property Item _highlightedItem
 
-    // this is just to suppress errors, not using this probably shuold not break anything
-    property bool _invertColors
-
     function updateHighlightbarFor(item) {
         contextMenu._highlightBar.x = item ? item.x : parent.x
         contextMenu._highlightBar.width = item && item.enabled ? item.width : 0
     }
 
     function resetHighlightbar() {
-        contextMenu._highlightBar.x = parent.x
+        contextMenu._highlightBar.x = parent.x // or simply 0? pulleyMenu/*(parent here)*/.x breaks landscape in FancyPullDownMenu
         contextMenu._highlightBar.width = contextMenu.width
     }
 

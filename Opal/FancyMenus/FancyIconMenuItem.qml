@@ -7,6 +7,8 @@ Item {
     property bool down
     property bool highlighted
     property bool _invertColors
+    signal earlyClick
+    signal delayedClick
     signal clicked
 
     width: parent.itemWidth
