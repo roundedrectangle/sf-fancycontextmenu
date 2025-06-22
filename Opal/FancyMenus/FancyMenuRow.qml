@@ -68,9 +68,16 @@ Row {
     }
 
     function calculateItemWidth() {
-        var count = menuRow.visibleChildren.length;
-        itemWidth = count > 0 ? width/count : width
-        width -= (count-1) * spacing
+        var count = menuRow.visibleChildren.length
+        if (count === 0) {
+            itemWidth = width
+            return
+        }
+
+        var sizedCount = 0
+        for (var i=0; i<count; i++)
+            sizedCount += menuRow.visibleChildren[i].size
+        itemWidth = (width - (count-1) * spacing) / sizedCount
     }
 
     // first xpos change event is received _after_ we receive the events from

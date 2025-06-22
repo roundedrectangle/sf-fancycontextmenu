@@ -4,22 +4,21 @@ import "private"
 
 Item {
     id: root
-    property bool down
-    property bool highlighted
-    property bool _invertColors
-    signal earlyClick
-    signal delayedClick
-    signal clicked
+    property alias icon: icon
+    property alias text: label.text
+    property alias direction: row.layoutDirection
 
-    width: parent.itemWidth
+    property real size: 1
+    width: parent.itemWidth * size
     height: Theme.itemSizeSmall
 
     property bool _calculateWidth: true
     onVisibleChanged: if (parent.calculateItemWidth && _calculateWidth) parent.calculateItemWidth()
 
-    property alias icon: icon
-    property alias text: label.text
-    property alias direction: row.layoutDirection
+    property bool down
+    property bool highlighted
+    property bool _invertColors
+    signal clicked
 
     property alias _menuItem: label
     property alias _content: row
