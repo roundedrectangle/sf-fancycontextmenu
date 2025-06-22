@@ -10,6 +10,7 @@ Item {
     height: Theme.itemSizeSmall//icon.height
     Icon {
         id: icon
+        opacity: parent.enabled ? 1.0 : Theme.opacityLow
         anchors.centerIn: parent
     }
 

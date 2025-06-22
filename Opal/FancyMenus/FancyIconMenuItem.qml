@@ -33,6 +33,7 @@ Item {
             id: icon
             anchors.verticalCenter: parent.verticalCenter
             visible: !!source
+            opacity: enabled ? 1.0 : Theme.opacityLow
         }
         FadeableHorizontalMenuItem {
             id: label
