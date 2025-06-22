@@ -34,7 +34,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             visible: !!source
         }
-        FadeableXMenuItem {
+        FadeableHorizontalMenuItem {
             id: label
             width: Math.min(implicitWidth, root.width - icon.width - parent.spacing)
             anchors.verticalCenter: parent.verticalCenter
