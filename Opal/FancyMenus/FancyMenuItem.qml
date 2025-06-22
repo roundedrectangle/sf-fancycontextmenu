@@ -1,12 +1,12 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-FancyIconMenuItem {
+IconTextRowMenuItem {
     property int __silica_menuitem
     width: parent.width
 
     signal earlyClick
     signal delayedClick
 
-    onSizeChanged: if (size) console.warn("FancyAloneMenuItem::size is ignored.")
+    onSizeChanged: if (size) console.warn("FancyMenuItem::size is ignored.")
 }
