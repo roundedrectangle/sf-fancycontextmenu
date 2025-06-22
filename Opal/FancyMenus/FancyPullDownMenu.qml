@@ -5,64 +5,53 @@ import 'private/Util.js' as Util
 PullDownMenu {
     id: pulleyMenu
     property Item _highlightBar
-    property bool listItem
-    //property bool down: !_atInitialPosition
-    //property var lastKnownXPos
-    property int originalHighlightBarX
+    property real _oldContentX
 
-    Component.onCompleted: {
-        _highlightBar = Util.findHighlightRectangle(pulleyMenu)
-        originalHighlightBarX = _highlightBar.x
+    Component.onCompleted: _highlightBar = Util.findHighlightRectangle(pulleyMenu)
+
+    /* Important info about pulley menus:
+    We use the same approach pulley menu uses to track opening. First, we enable dragging over bounds. Then, we track where the content moves and based on this move the selection.
+    This has an issue, because at every start of a movement we think that it was started (horizontally) from the center of the screen. Without workarounds we would think that it is started from 0 (or last position).
+    Fixing this would probably require a completely different approach.
+    */
+
+    property var __b1: Binding {
+            target: flickable
+            property: "flickableDirection"
+            value: Flickable.HorizontalAndVerticalFlick
+        }
+    property var __b2: Binding {
+        target: flickable
+        property: "boundsBehavior"
+        value: flickable.atYBeginning || flickable.contentY <= 0 ? Flickable.DragOverBounds : Flickable.StopAtBounds
+    }
+
+    // contentItem.opacityChanged does not seem to work, so we reset it when required automatically
+
+    property var __c1: Connections {
+        target: flickable
+
+        onContentXChanged: {
+            if (flickable.contentX == 0) return
+            if (menuItem && menuItem.hasOwnProperty("xPos"))
+                menuItem.xPos += (_oldContentX - flickable.contentX) * 2
+            _oldContentX = flickable.contentX
+            flickable.contentX = 0
+        }
+        onMovementEnded:  _oldContentX = 0
+
+        onContentYChanged: {
+            if (flickable.contentY - _finalPosition < 0) { // < -1.0
+                flickable.contentY = _finalPosition
+                flickable.contentItem.opacity = 1
+            }
+        }
     }
 
     onPositionChanged: {
-        //lastKnownXPos = mouse.x
-        //console.log("Changed(TM)")
         // propagate x-position since jolla's contextmenu doesn't remember it.
-        if (_highlightBar.highlightedItem && _highlightBar.highlightedItem.hasOwnProperty("xPos"))
-            _highlightBar.highlightedItem.xPos = _contentColumn.mapFromItem(pulleyMenu, mouse.x, mouse.y).x
-    }
-
-    function resetHighlightbar() {
-        if (!_highlightBar) return
-        _highlightBar.x = originalHighlightBarX // 0
-        _highlightBar.width = width
-    }
-
-    on_AtInitialPositionChanged: if(_atInitialPosition) resetHighlightbar()
-
-    function _highlightMenuItem(parentItem, yPos) {
-        //console.trace()
-        var child = _quickSelectMenuItem(parentItem, yPos)
-        if (child) {
-            return
-        }
-
-        //console.log(lastKnownXPos,mouseX,mouseY)
-        //console.log(_dragDistance)
-        //var xPos = lastKnownXPos - _contentColumn.x
-        var xPos = width / 2
-
-        // Only try to highlight if we haven't dragged to the final position
-        if (!flickable.dragging || !_atFinalPosition) {
-            child = Util.childAt(parentItem, xPos, yPos)
-        }
-        while (child) {
-            if (child && child.hasOwnProperty("__silica_menuitem") && child.enabled && child.visible) {
-                menuItem = child
-                //xPos = parentItem.mapToItem(child, xPos, yPos).x
-                yPos = parentItem.mapToItem(child, xPos, yPos).y
-                _highlightBar.highlight(menuItem, pulleyMenu, _dragDistance <= _contentEnd && !_atFinalPosition)
-                break
-            }
-            parentItem = child
-            //xPos = parentItem.mapToItem(child, xPos, yPos).x
-            yPos = parentItem.mapToItem(child, xPos, yPos).y
-            child = Util.childAt(parentItem, xPos, yPos)
-        }
-        if (!child) {
-            menuItem = null
-            _highlightBar.clearHighlight()
+        if (menuItem && menuItem.hasOwnProperty("xPos")) {
+            menuItem.xPos = _contentColumn.mapFromItem(pulleyMenu, mouse.x, mouse.y).x;
         }
     }
 }
