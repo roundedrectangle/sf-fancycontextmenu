@@ -15,9 +15,48 @@ S.Page {
     S.SilicaFlickable {
         id: flick
         anchors.fill: parent
-        contentHeight: column.height + S.Theme.horizontalPageMargin
+        contentHeight: column.height + S.Theme.paddingLarge
 
         S.VerticalScrollDecorator { flickable: flick }
+
+        M.FancyPullDownMenu {
+            M.FancyMenuRow {
+                M.IconRowMenuItem {
+                    icon.source: "image://theme/icon-m-delete"
+                    enabled: false
+                }
+                M.IconRowMenuItem {
+                    icon.source: "image://theme/icon-m-clipboard"
+                    onClicked: S.Notices.show(qsTr("Copied"))
+                }
+                M.IconRowMenuItem {
+                    icon.source: "image://theme/icon-m-favorite"
+                    onClicked: S.Notices.show(qsTr("Favorited"))
+                }
+            }
+            M.FancyMenuRow {
+                M.IconTextRowMenuItem {
+                    icon.source: "image://theme/icon-m-message-reply"
+                    text: qsTr("Reply")
+                    onClicked: S.Notices.show(qsTr("Replied"))
+                }
+                M.IconTextRowMenuItem {
+                    icon.source: "image://theme/icon-m-message-forward"
+                    text: qsTr("Forward")
+                    onClicked: S.Notices.show(qsTr("Forwarded"))
+                }
+            }
+            S.MenuItem {
+                text: qsTr("Download")
+                onClicked: S.Notices.show(qsTr("Downloaded"))
+            }
+        }
+
+        // TODO: fix having both PullDownMenu and PushUpMenu
+        /*M.FancyPushUpMenu {
+            
+        }*/
+
 
         Column {
             id: column
@@ -48,34 +87,40 @@ S.Page {
                     M.FancyContextMenu {
                         listItem: parent
                         M.FancyMenuRow {
-                            M.FancyMenuIcon {
+                            M.IconRowMenuItem {
                                 icon.source: "image://theme/icon-m-delete"
-                                onClicked: undefined // Here goes your code
+                                enabled: false
                             }
-                            M.FancyMenuIcon {
+                            M.IconRowMenuItem {
                                 icon.source: "image://theme/icon-m-clipboard"
+                                onClicked: S.Notices.show(qsTr("Copied"))
                             }
-                            M.FancyMenuIcon {
+                            M.IconRowMenuItem {
                                 icon.source: "image://theme/icon-m-favorite"
+                                onClicked: S.Notices.show(qsTr("Favorited"))
                             }
                         }
                         M.FancyMenuRow {
-                            M.FancyIconMenuItem {
-                                icon.source: "image://theme/icon-m-message-reply"
-                                text: qsTr("Reply")
-                            }
-                            M.FancyIconMenuItem {
+                            M.IconTextRowMenuItem {
                                 icon.source: "image://theme/icon-m-message-forward"
                                 text: qsTr("Forward")
+                                onClicked: S.Notices.show(qsTr("Forwarded"))
+                            }
+                            M.IconTextRowMenuItem {
+                                icon.source: "image://theme/icon-m-message-reply"
+                                text: qsTr("Reply")
+                                onClicked: S.Notices.show(qsTr("Replied"))
                             }
                         }
                         S.MenuItem {
                             text: qsTr("About this")
+                            onClicked: S.Notices.show(qsTr("Information"))
                         }
 
-                        M.FancyAloneMenuItem {
+                        M.FancyMenuItem {
                             icon.source: "image://theme/icon-m-favorite"
                             text: qsTr("Add to favorites")
+                            onClicked: S.Notices.show(qsTr("Favorited"))
                         }
 
                     }
@@ -84,6 +129,19 @@ S.Page {
 
             S.SectionHeader {
                 text: qsTr("Advanced usage")
+            }
+
+            S.Label {
+                x: S.Theme.horizontalPageMargin
+                anchors {
+                    topMargin: S.Theme.paddingMedium
+                    bottomMargin: S.Theme.paddingMedium
+                }
+                width: root.width - 2*x
+                wrapMode: Text.Wrap
+                font.pixelSize: S.Theme.fontSizeSmall
+                color: S.Theme.highlightColor
+                text: qsTr("The following example covers advanced features such as custom sizes, icon direction and long texts.")
             }
 
             S.ListItem {
@@ -102,38 +160,40 @@ S.Page {
                     M.FancyContextMenu {
                         listItem: parent
 
-                        M.FancyAloneMenuItem {
+                        M.FancyMenuItem {
                             direction: Qt.RightToLeft
                             icon.source: "image://theme/icon-m-rotate-right"
                             text: qsTr("Icon on the right side")
                         }
 
                         M.FancyMenuRow {
-                            M.FancyMenuIcon {
+                            M.IconRowMenuItem {
                                 icon.source: "image://theme/icon-m-question"
                             }
-                            M.FancyMenuItem {
+                            M.RowMenuItem {
                                 text: qsTr("Long text is resized")
                             }
-                            M.FancyMenuItem {
+                            M.RowMenuItem {
                                 text: qsTr("Truncated super long text which will not fit even when resized goes here")
                             }
                         }
 
                         M.FancyMenuRow {
-                            M.FancyIconMenuItem {
-                                direction: Qt.RightToLeft
-                                icon.source: "image://theme/icon-m-message-reply"
-                                text: qsTr("Icon on the right")
+                            M.IconRowMenuItem {
+                                icon.source: "image://theme/icon-m-image"
                             }
-                            M.FancyIconMenuItem {
+                            M.IconRowMenuItem {
+                                icon.source: "image://theme/icon-m-media-radio"
+                            }
+                            M.IconTextRowMenuItem {
                                 direction: Qt.RightToLeft
                                 icon.source: "image://theme/icon-m-message-forward"
-                                text: qsTr("Icon on the right")
+                                size: 2
+                                text: qsTr("Sizing")
                             }
                         }
 
-                        M.FancyAloneMenuItem {
+                        M.FancyMenuItem {
                             icon.source: "image://theme/icon-m-about"
                             // no text
                         }
