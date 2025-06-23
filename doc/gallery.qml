@@ -54,7 +54,7 @@ S.Page {
 
         // TODO: fix having both PullDownMenu and PushUpMenu
         /*M.FancyPushUpMenu {
-            
+
         }*/
 
 
@@ -141,7 +141,7 @@ S.Page {
                 wrapMode: Text.Wrap
                 font.pixelSize: S.Theme.fontSizeSmall
                 color: S.Theme.highlightColor
-                text: qsTr("The following example covers advanced features such as custom sizes, icon direction and long texts.")
+                text: qsTr("The following examples cover advanced features such as custom sizes, icon direction, long texts, spacings, as well as short and icon-only text versions. Some of them might behave differently when screen is rotated.")
             }
 
             S.ListItem {
@@ -152,7 +152,7 @@ S.Page {
                     y: S.Theme.paddingLarge
                     width: root.width - 2*x
                     wrapMode: Text.Wrap
-                    text: qsTr("Press to open context menu covering all advanced features")
+                    text: qsTr("Press to open context menu covering some advanced features")
                 }
 
                 onClicked: openMenu()
@@ -196,6 +196,83 @@ S.Page {
                         M.FancyMenuItem {
                             icon.source: "image://theme/icon-m-about"
                             // no text
+                        }
+                    }
+                }
+            }
+
+            S.TextSwitch {
+                id: deletionSwitch
+                text: qsTr("Allow deleting")
+                checked: true
+            }
+
+            S.TextSwitch {
+                id: backSwitch
+                text: qsTr("Allow going backwards")
+            }
+
+            S.ListItem {
+                contentHeight: label3.height + label3.y*2
+                S.Label {
+                    id: label3
+                    x: S.Theme.horizontalPageMargin
+                    y: S.Theme.paddingLarge
+                    width: root.width - 2*x
+                    wrapMode: Text.Wrap
+                    text: qsTr("Press to open context menu covering other advanced features")
+                }
+
+                onClicked: openMenu()
+                menu: Component {
+                    M.FancyContextMenu {
+                        M.FancyMenuRow {
+                            spacing: S.Theme.itemSizeExtraSmall
+                            M.IconRowMenuItem {
+                                icon.source: "image://theme/icon-m-image"
+                            }
+                            M.RowMenuItem {
+                                size: 1.5
+                                text: qsTr("Spacing")
+                            }
+                            M.IconRowMenuItem {
+                                icon.source: "image://theme/icon-m-home"
+                            }
+                        }
+                        M.FancyMenuRow {
+                            // Ratio 2 means that item occupies 1/2 of the screen
+                            checkShort: function (ratio, size) { return isPortrait && ratio >= 2 }
+
+                            M.RowMenuItem {
+                                visible: deletionSwitch.checked
+                                shortText: qsTr("Delete")
+                                longText: qsTr("Delete message")
+                            }
+                            M.RowMenuItem {
+                                shortText: qsTr("Edit")
+                                longText: qsTr("Edit message")
+                            }
+                        }
+                        M.FancyMenuRow {
+                            checkIconOnly: function (ratio) { return /*S.Screen.sizeCategory <= Screen.medium && */ isPortrait && ratio >= 3 }
+                            checkShort: function (ratio) { return /*S.Screen.sizeCategory <= Screen.medium && */ isPortrait && ratio >= 2 }
+
+                            M.IconTextRowMenuItem {
+                                icon.source: "image://theme/icon-m-previous"
+                                visible: backSwitch.checked
+                                shortText: qsTr("Back")
+                                longText: qsTr("Previous track")
+                            }
+                            M.IconTextRowMenuItem {
+                                icon.source: "image://theme/icon-m-play"
+                                shortText: qsTr("Play")
+                                longText: qsTr("Resume playback")
+                            }
+                            M.IconTextRowMenuItem {
+                                icon.source: "image://theme/icon-m-next"
+                                shortText: qsTr("Next")
+                                longText: qsTr("Next track")
+                            }
                         }
                     }
                 }
