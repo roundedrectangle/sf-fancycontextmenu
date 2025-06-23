@@ -24,22 +24,28 @@ Row {
 
     spacing: 0
 
+    property var checkIconOnly: function() { return false }
+    property var checkShort: function() { return false }
+
+    function _checkIconOnly(size) { return checkIconOnly(sizedCount / size, size) }
+    function _checkShort(size) { return checkShort(sizedCount / size, size) }
+
     property Item menu: parent.parent // FancyContextMenu/FancyPullDownMenu
     property bool isPulley: menu && (typeof menu._isPullDownMenu !== 'undefined')
+    property real xPos: width / 2 // the x position we need to track
 
-    // the x position we need to track
-    property real xPos: width / 2
-    // calculated item width, equally divided
-    property real itemWidth
-
-    signal clicked
-    signal earlyClick
-    signal delayedClick
+    property int count: visibleChildren.length
+    property real sizedCount
+    property real itemWidth // calculated item width, equally divided
 
     // these get fed from ContextMenu/PullDownMenu
     property bool down
     property bool highlighted
     property bool _invertColors
+
+    signal clicked
+    signal earlyClick
+    signal delayedClick
 
     // Pulley menus don't feed the down property
     // we still do this to items inside the row just in case
@@ -51,7 +57,7 @@ Row {
     // current highlighted item
     property Item _highlightedItem
 
-    property bool enabled: !_highlightedItem || _highlightedItem.enabled
+    property bool enabled: !_highlightedItem || _highlightedItem.enabled // makes the menu know if the item is enabled (only makes visual improvemenyd)
 
     function updateHighlightbarFor(item) {
         menu._highlightBar.x = item ? item.x : parent.x
@@ -74,16 +80,20 @@ Row {
             return
         }
 
-        var sizedCount = 0
+        var _sizedCount = 0
         for (var i=0; i<count; i++)
-            sizedCount += menuRow.visibleChildren[i].size
+            _sizedCount += menuRow.visibleChildren[i].size
+        sizedCount = _sizedCount
+
         itemWidth = (width - (count-1) * spacing) / sizedCount
     }
+
+    // TODO: pulley menus: shared XPos when switching stuff
 
     // first xpos change event is received _after_ we receive the events from
     // the contextmenu, so this is for initialising xpos in those cases.
     function updateXPosFromMenu() {
-        if (isPulley) return
+        if (isPulley) return // TODO
 
         if (menu.listItem/* && settings.commentsTapToHide*/) { // if listItem is set, events are produced relative listItem
             xPos = menu._contentColumn.mapFromItem(menu.listItem, menu.listItem.mouseX, menu.listItem.mouseY).x

@@ -12,6 +12,11 @@ Item {
     width: parent.itemWidth * size
     height: Theme.itemSizeSmall
 
+    property bool _useIconOnly: parent._checkIconOnly(size)
+    property bool _useShort: parent._checkShort(size)
+    property string shortText
+    property string longText
+
     property bool _calculateWidth: true
     onVisibleChanged: if (parent.calculateItemWidth && _calculateWidth) parent.calculateItemWidth()
 
@@ -36,9 +41,10 @@ Item {
         }
         FadeableHorizontalMenuItem {
             id: label
-            width: Math.min(implicitWidth, root.width - icon.width - parent.spacing)
+            width: !visible ? 0 : Math.min(implicitWidth, root.width - icon.width - parent.spacing)
             anchors.verticalCenter: parent.verticalCenter
-            visible: !!text
+            visible: !_useIconOnly && !!text
+            text: _useShort ? shortText : longText
         }
     }
 }

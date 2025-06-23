@@ -8,5 +8,9 @@ IconTextRowMenuItem {
     signal earlyClick
     signal delayedClick
 
+    _useIconOnly: false
+    _useShort: false
+    text: ''
+
     onSizeChanged: if (size) console.warn("FancyMenuItem::size is ignored.")
 }
